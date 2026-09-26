@@ -1,0 +1,20 @@
+:root{color-scheme:light dark;--bg:#f6f7fb;--card:#fff;--text:#1b1d23;--muted:#5d6270;--line:#e3e5ec;--accent:#4f6bf5}
+@media (prefers-color-scheme:dark){:root{--bg:#12141a;--card:#1b1e27;--text:#edeff3;--muted:#9aa0ad;--line:#2a2e3a;--accent:#7cf5b0}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:0 auto;padding:40px 20px 60px}
+header{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7cf5b0,#4f6bf5);display:grid;place-items:center;color:#12141a;font-weight:800;font-size:20px}
+h1{font-size:28px;margin:0}
+h2{font-size:20px;margin:34px 0 8px}
+h3{font-size:16px;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--muted);margin:4px 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:14px 0}
+ul{margin:6px 0;padding-left:22px}
+li{margin:3px 0}
+a{color:var(--accent)}
+nav{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 20px;font-size:15px}
+.lang{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:40px;border-top:1px solid var(--line);padding-top:24px}
+code{font-family:Consolas,monospace;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+footer{color:var(--muted);font-size:14px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
