@@ -10,41 +10,57 @@
 <body>
 <main>
 <header><div class="logo">C</div><h1>Privacy Policy</h1></header>
-<p class="lead">Calendar Widget · last updated 27 September 2026</p>
+<p class="lead">Calendar Widget · last updated 3 October 2026</p>
 <nav><a href="index.html">About Calendar Widget</a><a href="terms.html">Terms of Service</a><a href="#en">English</a><a href="#ru">Русский</a></nav>
 
 <section id="en">
 <div class="card">
-<p><b>In short:</b> Calendar Widget runs entirely on your computer. It exchanges data only with Google, Microsoft and the calendar links
-you add, directly and over HTTPS. The developer has no servers and receives none of your data.</p>
+<p><b>In short:</b> Calendar Widget runs entirely on your computer. The developer has no servers and receives none of your data.
+The app talks directly, over HTTPS, only to the services you connect (Google, Microsoft, calendar links), to GitHub to check for updates,
+and — only if you turn on weather — to Open-Meteo.</p>
 </div>
 
 <h2>What data the app accesses</h2>
 <p>Only after you connect an account and grant permission on Google's or Microsoft's own sign-in page:</p>
 <ul>
-<li><b>Google:</b> the list of your calendars (read only, scope <code>calendar.calendarlist.readonly</code>); events in your calendars
-(read and write, scope <code>calendar.events</code>); your Google Tasks (read and write, scope <code>tasks</code>).</li>
-<li><b>Microsoft:</b> your calendars and events (read and write, <code>Calendars.ReadWrite</code>); your account address to name the account
-in the app (<code>User.Read</code>); continued access without signing in every hour (<code>offline_access</code>).</li>
+<li><b>Google Calendar:</b> the list of your calendars (read only, scope <code>calendar.calendarlist.readonly</code>) and the events in them
+(read and write, scope <code>calendar.events</code>).</li>
+<li><b>Google Tasks:</b> your task lists and tasks (read and write, scope <code>tasks</code>).</li>
+<li><b>Google Drive — only the app's own hidden folder</b> (scope <code>drive.appdata</code>): if you choose to keep your sticky notes on Google Drive,
+the app stores there your notes, the images you put in them, and the times and repeats you set for Google Tasks in the widget, so they are the same
+on your other computers. The app cannot see or change any other files on your Drive.</li>
+<li><b>Microsoft (Outlook.com, Microsoft 365):</b> your calendars and events (read and write, <code>Calendars.ReadWrite</code>); your account address
+to name the account in the app (<code>User.Read</code>); continued access without signing in every hour (<code>offline_access</code>).</li>
+<li><b>Outlook on this computer:</b> if you connect it, the app reads the calendars you select from the classic Outlook app on the same computer
+and can pass your answer to an invitation to Outlook, which sends it. This happens locally; nothing goes to the developer.</li>
 <li><b>Calendars by link</b> (.ics) that you add yourself: the events published at that link.</li>
 </ul>
-<p>The app does not access your email, contacts, files or photos.</p>
+<p>The app does not access your email, contacts, or any files outside its own Drive folder.</p>
 
 <h2>How the data is used</h2>
-<p>Only to show your calendars and tasks in the widget and to carry out the changes you make in it: creating, moving, editing and deleting
-events and tasks, answering invitations, and showing Windows reminders. Nothing else: no profiling, no advertising, no analytics.</p>
+<p>Only to show your calendars, tasks and sticky notes in the widget and to carry out the changes you make in it: creating, moving, editing
+and deleting events, tasks and notes, answering invitations, and showing Windows reminders. Nothing else: no profiling, no advertising,
+no analytics, no machine-learning training.</p>
 
 <h2>Where the data is stored</h2>
 <ul>
-<li>Only on your computer, in your Windows user profile (<code>%AppData%\CalendarWidget</code>).</li>
+<li>On your computer, in your Windows user profile (<code>%AppData%\CalendarWidget</code>): settings, sticky notes, the offline copy of your events,
+which reminders were already shown, and a local error log that never leaves your computer.</li>
 <li>Sign-in tokens and the offline copy of your events are encrypted with Windows Data Protection (DPAPI), tied to your Windows account.</li>
+<li>If you choose Google Drive for sticky notes — also in the app's hidden folder on your own Google Drive (see above).</li>
 <li>The developer operates no servers and never receives, stores or sees your data.</li>
 </ul>
 
+<h2>Other services the app contacts</h2>
+<ul>
+<li><b>GitHub</b> (github.com): about once a day the app asks GitHub whether a new version exists. The request contains only the app's version number;
+no personal or calendar data. You can turn this off in ⋯ → Updates. An update is downloaded from GitHub only when you click “Update”.</li>
+<li><b>Open-Meteo</b> (open-meteo.com): only if you turn on weather — the city name you type (to find it) and then its coordinates (for the forecast).
+No calendar data is sent.</li>
+</ul>
+
 <h2>Sharing</h2>
-<p>Your data is not sold, transferred or disclosed to anyone. Data travels only between your computer and the services you connected
-(Google, Microsoft, calendar links). If you turn on the optional weather feature, the app sends only the city you chose
-(its name and coordinates) to the Open-Meteo weather service; no calendar data is sent there.</p>
+<p>Your data is not sold, transferred or disclosed to anyone. Data travels only between your computer and the services listed above.</p>
 
 <h2>Google API Services — Limited Use</h2>
 <p>Calendar Widget's use and transfer to any other app of information received from Google APIs will adhere to the
@@ -57,7 +73,9 @@ including the Limited Use requirements.</p>
 the access is also revoked with Google automatically.</li>
 <li>Google: <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.
 Microsoft: <a href="https://account.live.com/consent/Manage">account.live.com/consent/Manage</a>.</li>
-<li>To remove everything, uninstall the app and delete the folder <code>%AppData%\CalendarWidget</code>.</li>
+<li>To remove everything from your computer, uninstall the app and answer “Yes” to deleting your data
+(or delete the folder <code>%AppData%\CalendarWidget</code>). Sticky notes kept on Google Drive can be removed by deleting the app's data
+in Google Drive settings → Manage apps.</li>
 </ul>
 
 <h2>Changes and contact</h2>
@@ -66,55 +84,71 @@ Contact the developer via GitHub: <a href="https://github.com/narekn173">github.
 </section>
 
 <section id="ru">
-<div class="lang">Русский</div>
 <div class="card">
-<p><b>Коротко:</b> Calendar Widget целиком работает на вашем компьютере. Он обменивается данными только с Google, Microsoft
-и добавленными вами ссылками на календари — напрямую, по HTTPS. Серверов у разработчика нет, ваших данных он не получает.</p>
+<p><b>Коротко:</b> Calendar Widget целиком работает на вашем компьютере. Серверов у разработчика нет, ваших данных он не получает.
+Программа обращается напрямую, по HTTPS, только к подключённым вами службам (Google, Microsoft, ссылки на календари), к GitHub — проверить
+обновления, и — только если включить погоду — к Open-Meteo.</p>
 </div>
 
 <h2>К каким данным есть доступ</h2>
 <p>Только после того, как вы подключите аккаунт и разрешите доступ на странице входа самого Google или Microsoft:</p>
 <ul>
-<li><b>Google:</b> список ваших календарей (только чтение, <code>calendar.calendarlist.readonly</code>); события в них (чтение и правка,
-<code>calendar.events</code>); ваши Google Задачи (чтение и правка, <code>tasks</code>).</li>
-<li><b>Microsoft:</b> ваши календари и события (чтение и правка, <code>Calendars.ReadWrite</code>); адрес аккаунта, чтобы назвать его в программе
-(<code>User.Read</code>); доступ без входа каждый час (<code>offline_access</code>).</li>
+<li><b>Google Календарь:</b> список ваших календарей (только чтение, <code>calendar.calendarlist.readonly</code>) и события в них
+(чтение и правка, <code>calendar.events</code>).</li>
+<li><b>Google Задачи:</b> ваши списки и задачи (чтение и правка, <code>tasks</code>).</li>
+<li><b>Google Диск — только скрытая папка самой программы</b> (<code>drive.appdata</code>): если вы решите хранить стикеры на Google Диске,
+программа кладёт туда ваши стикеры, картинки в них, а также время и повторы, заданные в виджете для Google Задач, — чтобы на других ваших
+компьютерах было то же. Другие файлы на вашем Диске программа не видит и не меняет.</li>
+<li><b>Microsoft (Outlook.com, Microsoft 365):</b> ваши календари и события (чтение и правка, <code>Calendars.ReadWrite</code>); адрес аккаунта,
+чтобы назвать его в программе (<code>User.Read</code>); доступ без входа каждый час (<code>offline_access</code>).</li>
+<li><b>Outlook на этом компьютере:</b> если вы его подключите, программа читает выбранные календари из классического Outlook на этом же компьютере
+и может передать Outlook ваш ответ на приглашение — отправляет его сам Outlook. Всё это происходит на компьютере; разработчику ничего не уходит.</li>
 <li><b>Календари по ссылке</b> (.ics), которые вы добавили сами: опубликованные по ссылке события.</li>
 </ul>
-<p>Почта, контакты, файлы и фото программе недоступны.</p>
+<p>Почта, контакты и файлы вне своей папки на Диске программе недоступны.</p>
 
 <h2>Как данные используются</h2>
-<p>Только чтобы показывать ваши календари и задачи в виджете и выполнять ваши же правки: создать, перенести, изменить или удалить событие
-и задачу, ответить на приглашение, показать напоминание Windows. Больше ни для чего: ни профилей, ни рекламы, ни статистики.</p>
+<p>Только чтобы показывать ваши календари, задачи и стикеры в виджете и выполнять ваши же правки: создать, перенести, изменить или удалить событие,
+задачу и стикер, ответить на приглашение, показать напоминание Windows. Больше ни для чего: ни профилей, ни рекламы, ни статистики, ни обучения
+моделей.</p>
 
 <h2>Где данные хранятся</h2>
 <ul>
-<li>Только на вашем компьютере, в профиле пользователя Windows (<code>%AppData%\CalendarWidget</code>).</li>
-<li>Разрешения на вход и копия событий для работы без сети зашифрованы средствами Windows (DPAPI) и привязаны к вашей учётной записи Windows.</li>
+<li>На вашем компьютере, в профиле пользователя Windows (<code>%AppData%\CalendarWidget</code>): настройки, стикеры, копия событий для работы без сети,
+какие напоминания уже показаны, и журнал ошибок, который никуда не отправляется.</li>
+<li>Разрешения на вход и копия событий зашифрованы средствами Windows (DPAPI) и привязаны к вашей учётной записи Windows.</li>
+<li>Если для стикеров выбран Google Диск — ещё и в скрытой папке программы на вашем же Диске (см. выше).</li>
 <li>У разработчика нет серверов; он не получает, не хранит и не видит ваших данных.</li>
 </ul>
 
+<h2>Какие ещё службы программа использует</h2>
+<ul>
+<li><b>GitHub</b> (github.com): примерно раз в день программа спрашивает GitHub, нет ли новой версии. В запросе — только номер версии программы,
+никаких личных данных и событий. Выключается в «⋯ → Обновления». Обновление скачивается с GitHub только по вашей кнопке «Обновить».</li>
+<li><b>Open-Meteo</b> (open-meteo.com): только если включить погоду — введённое название города (чтобы его найти), затем его координаты
+(для прогноза). Данные календаря туда не уходят.</li>
+</ul>
+
 <h2>Передача третьим лицам</h2>
-<p>Ваши данные не продаются, не передаются и никому не раскрываются. Они идут только между вашим компьютером и подключёнными вами службами
-(Google, Microsoft, ссылки на календари). Если включить погоду, программа отправляет службе Open-Meteo только выбранный город
-(название и координаты); данные календаря туда не уходят.</p>
+<p>Ваши данные не продаются, не передаются и никому не раскрываются. Они идут только между вашим компьютером и перечисленными выше службами.</p>
 
 <h2>Google API — ограниченное использование</h2>
-<p>Использование и передача другим приложениям информации, полученной от Google API, соответствуют
+<p>Использование и передача в другие приложения сведений, полученных из Google API, соответствуют
 <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
 включая требования Limited Use.</p>
 
 <h2>Как убрать доступ и данные</h2>
 <ul>
-<li>В виджете: <b>⋯ → Аккаунты → Отключить</b> — разрешение и события аккаунта удаляются с компьютера; у Google доступ ещё и отзывается автоматически.</li>
+<li>В виджете: <b>⋯ → Аккаунты → Отключить</b>. Разрешения и события аккаунта удаляются с компьютера; доступ у Google отзывается автоматически.</li>
 <li>Google: <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.
 Microsoft: <a href="https://account.live.com/consent/Manage">account.live.com/consent/Manage</a>.</li>
-<li>Чтобы убрать всё — удалите программу и папку <code>%AppData%\CalendarWidget</code>.</li>
+<li>Убрать всё с компьютера — удалить программу и ответить «Да» на вопрос об удалении данных (или удалить папку <code>%AppData%\CalendarWidget</code>).
+Стикеры на Google Диске удаляются в настройках Google Диска → «Управление приложениями» → удалить данные приложения.</li>
 </ul>
 
 <h2>Изменения и связь</h2>
-<p>Если политика изменится, новая версия появится на этой странице с новой датой. Связь с разработчиком — через GitHub:
-<a href="https://github.com/narekn173">github.com/narekn173</a>.</p>
+<p>Если политика изменится, новая версия появится на этой странице с новой датой.
+Связаться с разработчиком — через GitHub: <a href="https://github.com/narekn173">github.com/narekn173</a>.</p>
 </section>
 
 <footer>© 2026 <a href="https://github.com/narekn173">narekn173</a> · <a href="index.html">Calendar Widget</a> · <a href="terms.html">Terms of Service</a></footer>
