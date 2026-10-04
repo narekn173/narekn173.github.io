@@ -1,69 +1,236 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-l="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendar Widget — a calendar widget for Windows 11</title>
-<meta name="description" content="Calendar Widget: a lightweight glass calendar widget for the Windows 11 desktop. Google Calendar, Google Tasks and Outlook.">
-<link rel="stylesheet" href="style.css">
+<title>Calendar Widget — a calendar on the Windows 11 desktop</title>
+<meta name="description" content="Calendar Widget: a lightweight glass calendar widget for the Windows 11 desktop. Google Calendar, Google Tasks, Outlook, calendar links, CalDAV and Todoist.">
+<meta name="color-scheme" content="dark">
+<style>
+:root{--bg:#0e1016;--text:#eef0f5;--muted:#a3a9b8;--faint:#6f7686;--line:rgba(255,255,255,.09);--glass:rgba(24,27,36,.62);--card:rgba(255,255,255,.045);--accent:#7cf5b0}
+*{box-sizing:border-box}
+html{overflow-x:clip}
+html[data-l=ru] [lang=en],html[data-l=en] [lang=ru]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;z-index:0;pointer-events:none}
+header.top{display:flex;align-items:center;gap:12px;padding:22px 0;flex-wrap:wrap}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7cf5b0,#4f6bf5);display:grid;place-items:center;color:#0e1016;font-weight:800}
+.brand{font-weight:600;font-size:17px}
+.top nav{margin-left:auto;display:flex;gap:8px 22px;font-size:15px;flex-wrap:wrap;align-items:center}
+.top nav a{color:var(--muted)}
+.langbtn{background:none;border:1px solid var(--line);border-radius:999px;padding:2px 12px;color:var(--muted);font:inherit;font-size:13px;cursor:pointer}
+.hero>*{min-width:0}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:48px;align-items:center;padding:36px 0 70px}
+.hero h1{font-size:46px;line-height:1.12;margin:0 0 16px;letter-spacing:-.01em}
+.lead{font-size:19px;color:var(--muted);margin:0 0 28px;max-width:470px}
+.dl{display:inline-flex;align-items:center;gap:14px;background:linear-gradient(135deg,#7cf5b0,#5ad6c8);color:#0b1a14;font-weight:700;font-size:19px;padding:16px 28px;border-radius:14px;box-shadow:0 10px 30px rgba(124,245,176,.25)}
+.dl:hover{text-decoration:none;filter:brightness(1.05)}
+.dl svg{width:22px;height:22px;flex:none}
+.dl small{display:block;font-weight:500;font-size:13px;opacity:.75}
+.meta{margin-top:14px;color:var(--faint);font-size:14px}
+.meta a{color:var(--muted);text-decoration:underline;text-decoration-color:rgba(255,255,255,.2)}
+.trust{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:26px;color:var(--muted);font-size:14px}
+.trust>span::before{content:"✓ ";color:var(--accent)}
+.desk{border-radius:22px;padding:34px;background:radial-gradient(circle at 20% 20%,#3b4ea8 0,transparent 55%),radial-gradient(circle at 85% 80%,#8a3f86 0,transparent 55%),linear-gradient(160deg,#1a2238,#121620);box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.w{background:var(--glass);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 14px 10px;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.w .h{display:flex;align-items:baseline;gap:8px;padding:0 4px 10px}
+.w .h b{font-size:18px}.w .h span{color:var(--faint)}
+.w .h i{margin-left:auto;font-style:normal;color:var(--faint);letter-spacing:6px;font-size:14px}
+.g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));font-size:11px}
+.g .dn{color:var(--faint);padding:0 6px 6px;font-size:10.5px;text-transform:uppercase}
+.g .d{border-top:1px solid var(--line);min-height:70px;padding:5px 4px}
+.g .n{font-size:12px;font-weight:600;padding:0 3px 3px;display:block}
+.g .o .n{color:var(--faint);font-weight:400}
+.g .t .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#0b1a14}
+.e{display:block;border-radius:5px;padding:1px 6px;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.c1{background:rgba(110,140,255,.32)}.c2{background:rgba(80,200,140,.3)}.c3{background:rgba(240,120,150,.32)}.c4{background:rgba(240,160,90,.32)}
+.w .f{display:flex;gap:8px;padding:8px 2px 0;font-size:11px;color:var(--muted)}
+.w .f em{font-style:normal;background:rgba(124,245,176,.12);color:var(--accent);border-radius:999px;padding:1px 8px}
+section{padding:58px 0;border-top:1px solid var(--line)}
+section h2{font-size:30px;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 28px}
+video{width:100%;border-radius:18px;display:block;background:#000}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.feat,.svc,details{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.feat{padding:20px}
+.feat b{display:block;font-size:16px;margin:8px 0 4px}.feat p{margin:0;color:var(--muted);font-size:14.5px}
+.ic{font-size:22px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.svc{padding:18px}
+.svc b{font-size:16px}.svc .k{display:block;font-size:12px;color:var(--faint)}
+.svc ol{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.svc li{margin:3px 0}
+kbd,code{font:12.5px "Segoe UI",system-ui,sans-serif;background:rgba(255,255,255,.08);border-radius:5px;padding:1px 6px;color:var(--text)}
+code{font-family:Consolas,monospace}
+.data{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px}
+.data p{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;color:var(--muted);font-size:15px}
+.data b{color:var(--text)}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;align-items:start}
+details{padding:14px 18px;border-radius:14px}
+details summary{font-weight:600;cursor:pointer;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";float:right;color:var(--faint);margin-left:10px}
+details[open] summary::after{content:"−"}
+details p{color:var(--muted);margin:8px 0 0;font-size:15px}
+.cta{text-align:center}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--faint);font-size:14px;display:flex;gap:8px 18px;flex-wrap:wrap}
+footer a{color:var(--muted)}
+@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr);gap:32px}.hero h1{font-size:36px}.cols{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.faq,.data{grid-template-columns:1fr}}
+@media (max-width:560px){.wrap{padding:0 16px}.cols,.steps{grid-template-columns:1fr}.desk{padding:14px}.g .d{min-height:54px}.e{font-size:10px;padding:1px 3px}.dl{font-size:17px;padding:14px 20px}.top nav a.nav{display:none}}
+</style>
 </head>
 <body>
+<div class="blob" style="width:520px;height:520px;background:#3b4ea8;left:-180px;top:-160px"></div>
+<div class="blob" style="width:460px;height:460px;background:#7a3d7c;right:-160px;top:240px"></div>
+<div class="wrap">
+<header class="top">
+  <div class="logo">C</div><div class="brand">Calendar Widget</div>
+  <nav>
+    <a class="nav" id="nav-video" href="#video" hidden><span lang="ru">Видео</span><span lang="en">Video</span></a>
+    <a class="nav" href="#connect"><span lang="ru">Как подключить</span><span lang="en">How to connect</span></a>
+    <a class="nav" href="#faq"><span lang="ru">Вопросы</span><span lang="en">FAQ</span></a>
+    <a href="privacy.html"><span lang="ru">Конфиденциальность</span><span lang="en">Privacy</span></a>
+    <button class="langbtn" id="lang" type="button" aria-label="Language">RU · EN</button>
+  </nav>
+</header>
+
 <main>
-<header><div class="logo">C</div><h1>Calendar Widget</h1></header>
-<p class="lead">A lightweight, glass-style calendar widget that lives on the Windows 11 desktop.</p>
-<nav><a href="#en">English</a><a href="#ru">Русский</a><a href="privacy.html">Privacy Policy / Политика конфиденциальности</a><a href="terms.html">Terms of Service / Условия использования</a></nav>
-
-<section id="en">
-<div class="card">
-<p><b>Calendar Widget</b> shows your calendars right on the desktop: month, week, day, agenda, several days or weeks, and year.
-You can create, move and edit events and tasks directly in the widget, get Windows reminders and join online meetings in one click.</p>
+<div class="hero">
+  <div>
+    <h1><span lang="ru">Календарь прямо на рабочем столе Windows&nbsp;11</span><span lang="en">Your calendar right on the Windows&nbsp;11 desktop</span></h1>
+    <p class="lead"><span lang="ru">Лёгкий стеклянный виджет: Google, Outlook, ссылки и CalDAV в одном месте — всегда под рукой, без открытия браузера.</span><span lang="en">A light glass widget: Google, Outlook, calendar links and CalDAV in one place — always at hand, no browser needed.</span></p>
+    <a class="dl" id="dl" href="https://github.com/narekn173/calendar-widget-releases/releases/latest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11m0 0 5-5m-5 5-5-5M5 20h14"/></svg>
+      <span><span lang="ru">Скачать для Windows 11</span><span lang="en">Download for Windows 11</span><small id="dl-meta"></small></span></a>
+    <div class="meta"><span id="other-line"><span lang="ru">Ноутбук на Snapdragon? </span><span lang="en">Snapdragon laptop? </span><a id="dl-other" href="https://github.com/narekn173/calendar-widget-releases/releases/latest"><span lang="ru">Версия для ARM</span><span lang="en">ARM version</span></a> · </span><a href="https://github.com/narekn173/calendar-widget-releases/releases"><span lang="ru">Все версии</span><span lang="en">All versions</span></a> · <span lang="ru">бесплатно для личного использования</span><span lang="en">free for personal use</span></div>
+    <div class="trust"><span><span lang="ru">Без регистрации</span><span lang="en">No sign-up</span></span><span><span lang="ru">Без рекламы и статистики</span><span lang="en">No ads, no analytics</span></span><span><span lang="ru">Данные — только у вас</span><span lang="en">Your data stays with you</span></span></div>
+  </div>
+  <div class="desk" aria-hidden="true">
+    <div class="w">
+      <div class="h"><b><span lang="ru">Октябрь</span><span lang="en">October</span></b><span>2026</span><i>⟳ ‹ › ⋯</i></div>
+      <div class="g">
+        <div class="dn"><span lang="ru">Пн</span><span lang="en">Mon</span></div><div class="dn"><span lang="ru">Вт</span><span lang="en">Tue</span></div><div class="dn"><span lang="ru">Ср</span><span lang="en">Wed</span></div><div class="dn"><span lang="ru">Чт</span><span lang="en">Thu</span></div><div class="dn"><span lang="ru">Пт</span><span lang="en">Fri</span></div><div class="dn"><span lang="ru">Сб</span><span lang="en">Sat</span></div><div class="dn"><span lang="ru">Вс</span><span lang="en">Sun</span></div>
+        <div class="d o"><span class="n">28</span></div><div class="d o"><span class="n">29</span></div><div class="d o"><span class="n">30</span><span class="e c2"><span lang="ru">Йога</span><span lang="en">Yoga</span></span></div>
+        <div class="d"><span class="n">1</span><span class="e c1"><span lang="ru">Созвон</span><span lang="en">Call</span></span></div><div class="d"><span class="n">2</span><span class="e c2"><span lang="ru">Пробежка</span><span lang="en">Run</span></span></div>
+        <div class="d"><span class="n">3</span><span class="e c3"><span lang="ru">Кино</span><span lang="en">Movie</span></span></div><div class="d t"><span class="n">4</span><span class="e c1"><span lang="ru">Обед</span><span lang="en">Lunch</span></span></div>
+        <div class="d"><span class="n">5</span><span class="e c1"><span lang="ru">Планёрка</span><span lang="en">Stand-up</span></span><span class="e c4"><span lang="ru">Отчёт</span><span lang="en">Report</span></span></div><div class="d"><span class="n">6</span><span class="e c2"><span lang="ru">Йога</span><span lang="en">Yoga</span></span></div>
+        <div class="d"><span class="n">7</span><span class="e c4"><span lang="ru">Отпуск у моря</span><span lang="en">Beach trip</span></span></div><div class="d"><span class="n">8</span></div><div class="d"><span class="n">9</span></div>
+        <div class="d"><span class="n">10</span><span class="e c3"><span lang="ru">Дача</span><span lang="en">Garden</span></span></div><div class="d"><span class="n">11</span><span class="e c2"><span lang="ru">Пробежка</span><span lang="en">Run</span></span></div>
+        <div class="d"><span class="n">12</span><span class="e c1"><span lang="ru">Встреча</span><span lang="en">Meeting</span></span></div><div class="d"><span class="n">13</span></div><div class="d"><span class="n">14</span><span class="e c2"><span lang="ru">Йога</span><span lang="en">Yoga</span></span></div>
+        <div class="d"><span class="n">15</span><span class="e c3"><span lang="ru">Др Ани 🎂</span><span lang="en">Ann’s bday 🎂</span></span></div><div class="d"><span class="n">16</span><span class="e c1"><span lang="ru">Планёрка</span><span lang="en">Stand-up</span></span></div><div class="d"><span class="n">17</span></div>
+        <div class="d"><span class="n">18</span><span class="e c2"><span lang="ru">Пробежка</span><span lang="en">Run</span></span></div>
+      </div>
+      <div class="f"><em>✉ <span lang="ru">1 приглашение</span><span lang="en">1 invitation</span></em><span style="margin-left:auto"><span lang="ru">Следующее: Обед · 13:00</span><span lang="en">Next: Lunch · 1:00 PM</span></span></div>
+    </div>
+  </div>
 </div>
-<h2>Calendars it works with</h2>
-<ul>
-<li><b>Google Calendar</b> and <b>Google Tasks</b> — view and edit.</li>
-<li><b>Microsoft Outlook</b> (Outlook.com, Hotmail and, where the organization allows it, work or school accounts) — view and edit.</li>
-<li><b>Calendars by link</b> (iCalendar / .ics, e.g. a published Outlook calendar) — view only.</li>
-</ul>
-<h2>Your data stays with you</h2>
-<ul>
-<li>The widget talks <b>only</b> to Google, Microsoft and the calendar links you add — directly from your computer, over HTTPS.</li>
-<li>There are <b>no servers</b> of the developer, no accounts, no analytics, no advertising.</li>
-<li>Sign-in tokens and the offline copy of your events are stored <b>only on your computer</b>, encrypted by Windows (DPAPI).</li>
-<li>You sign in on Google's or Microsoft's own page; the widget never sees your password.</li>
-</ul>
-<p>Details: <a href="privacy.html">Privacy Policy</a>.</p>
-<h2>License</h2>
-<p>Free for personal, non-commercial use under the <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/">PolyForm Noncommercial License 1.0.0</a>.
-Any commercial use is not permitted. Calendar Widget is an independent project and is not affiliated with Google or Microsoft.</p>
+
+<section id="video" hidden>
+  <h2><span lang="ru">20 секунд — и всё понятно</span><span lang="en">20 seconds and you get it</span></h2>
+  <p class="sub"><span lang="ru">Стекло на рабочем столе, перетаскивание дел, свёрнутая полоса у края экрана.</span><span lang="en">Glass on the desktop, drag and drop, the strip at the screen edge.</span></p>
+  <video id="vid" src="video.mp4" poster="video-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
 </section>
 
-<section id="ru">
-<div class="lang">Русский</div>
-<div class="card">
-<p><b>Calendar Widget</b> — лёгкий стеклянный виджет-календарь для рабочего стола Windows 11: месяц, неделя, день, повестка, несколько дней
-или недель и год. События и задачи можно создавать, переносить и менять прямо в виджете; напоминания — уведомлениями Windows,
-на онлайн-встречу — одним кликом.</p>
-</div>
-<h2>С какими календарями работает</h2>
-<ul>
-<li><b>Google Календарь</b> и <b>Google Задачи</b> — просмотр и правка.</li>
-<li><b>Microsoft Outlook</b> (Outlook.com, Hotmail, а если разрешает организация — рабочий или университетский) — просмотр и правка.</li>
-<li><b>Календари по ссылке</b> (iCalendar / .ics, например опубликованный календарь Outlook) — только просмотр.</li>
-</ul>
-<h2>Ваши данные остаются у вас</h2>
-<ul>
-<li>Виджет обращается <b>только</b> к Google, Microsoft и добавленным вами ссылкам — прямо с вашего компьютера, по HTTPS.</li>
-<li><b>Серверов разработчика нет</b>, как нет и учётных записей, статистики, рекламы.</li>
-<li>Разрешения на вход и копия событий для работы без сети хранятся <b>только на вашем компьютере</b>, зашифрованные средствами Windows (DPAPI).</li>
-<li>Вход — на странице самого Google или Microsoft; пароль виджет не видит.</li>
-</ul>
-<p>Подробно — <a href="privacy.html#ru">политика конфиденциальности</a>.</p>
-<h2>Лицензия</h2>
-<p>Бесплатно для личного некоммерческого использования по лицензии <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/">PolyForm Noncommercial 1.0.0</a>.
-Любая коммерция запрещена. Calendar Widget — независимый проект, не связанный с Google и Microsoft.</p>
+<section>
+  <h2><span lang="ru">Что умеет</span><span lang="en">What it does</span></h2>
+  <p class="sub"><span lang="ru">Всё, что нужно от календаря, — не открывая браузер.</span><span lang="en">Everything you need from a calendar — without opening a browser.</span></p>
+  <div class="cols">
+    <div class="feat"><span class="ic">🪟</span><b><span lang="ru">Стекло Windows 11</span><span lang="en">Windows 11 glass</span></b><p><span lang="ru">Прозрачный или матовый, светлый или тёмный — живёт под окнами и не мешает.</span><span lang="en">Clear or frosted, light or dark — it lives under your windows and stays out of the way.</span></p></div>
+    <div class="feat"><span class="ic">✋</span><b><span lang="ru">Прямо в виджете</span><span lang="en">Right in the widget</span></b><p><span lang="ru">Создать, перетащить, растянуть, ответить на приглашение, присоединиться к встрече.</span><span lang="en">Create, drag, resize, answer invitations, join online meetings.</span></p></div>
+    <div class="feat"><span class="ic">🗂</span><b><span lang="ru">Шесть видов</span><span lang="en">Six views</span></b><p><span lang="ru">Месяц, неделя, день, повестка, несколько дней, год — и полоса у края экрана.</span><span lang="en">Month, week, day, agenda, several days, year — and a strip at the screen edge.</span></p></div>
+    <div class="feat"><span class="ic">🔔</span><b><span lang="ru">Напоминания</span><span lang="en">Reminders</span></b><p><span lang="ru">Уведомлениями Windows, как в Google; задачи, стикеры, быстрый ввод «завтра в 9».</span><span lang="en">Windows notifications like Google’s; tasks, sticky notes, quick input “tomorrow at 9”.</span></p></div>
+  </div>
 </section>
 
-<footer>© 2026 <a href="https://github.com/narekn173">narekn173</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></footer>
+<section id="connect">
+  <h2><span lang="ru">Как подключить</span><span lang="en">How to connect</span></h2>
+  <p class="sub"><span lang="ru">«⋯» в шапке виджета → «Аккаунты» → нужная кнопка. Пароль виджет не видит: вход — на странице самой службы.</span><span lang="en">“⋯” in the widget header → “Accounts” → the button you need. The widget never sees your password: you sign in on the service’s own page.</span></p>
+  <div class="steps">
+    <div class="svc"><b>Google</b><span class="k"><span lang="ru">календари и задачи</span><span lang="en">calendars and tasks</span></span><ol><li><kbd>+ Google</kbd></li><li><span lang="ru">Войти в браузере</span><span lang="en">Sign in in the browser</span></li><li><span lang="ru">Разрешить доступ к календарю</span><span lang="en">Allow calendar access</span></li></ol></div>
+    <div class="svc"><b>Outlook</b><span class="k">Outlook.com, Hotmail, <span lang="ru">рабочий</span><span lang="en">work</span></span><ol><li><kbd>+ Outlook</kbd></li><li><span lang="ru">Войти в Microsoft</span><span lang="en">Sign in to Microsoft</span></li><li><span lang="ru">Рабочий не пускает? — «Outlook на этом ПК» или ссылка</span><span lang="en">Work account blocked? Use “Outlook on this PC” or a link</span></li></ol></div>
+    <div class="svc"><b><span lang="ru">Ссылка ICS</span><span lang="en">ICS link</span></b><span class="k"><span lang="ru">только просмотр</span><span lang="en">view only</span></span><ol><li><span lang="ru">Скопировать ссылку на календарь (.ics)</span><span lang="en">Copy the calendar link (.ics)</span></li><li><kbd><span lang="ru">+ Календарь по ссылке</span><span lang="en">+ Calendar by link</span></kbd></li><li><span lang="ru">Вставить</span><span lang="en">Paste it</span></li></ol></div>
+    <div class="svc"><b>CalDAV</b><span class="k">iCloud, Fastmail, Nextcloud…</span><ol><li><span lang="ru">Создать пароль приложения у службы</span><span lang="en">Create an app password at the service</span></li><li><kbd><span lang="ru">+ Яндекс, iCloud и др.</span><span lang="en">+ iCloud, Yandex and more</span></kbd></li><li><span lang="ru">Адрес почты и этот пароль</span><span lang="en">Your email and that password</span></li></ol></div>
+    <div class="svc"><b>Todoist</b><span class="k"><span lang="ru">задачи</span><span lang="en">tasks</span></span><ol><li><span lang="ru">Todoist → Настройки → Интеграции → «Для разработчиков»</span><span lang="en">Todoist → Settings → Integrations → “Developer”</span></li><li><span lang="ru">Скопировать токен</span><span lang="en">Copy the API token</span></li><li><kbd>+ Todoist</kbd> → <span lang="ru">вставить</span><span lang="en">paste</span></li></ol></div>
+  </div>
+</section>
+
+<section id="data">
+  <h2><span lang="ru">Ваши данные остаются у вас</span><span lang="en">Your data stays with you</span></h2>
+  <p class="sub"><span lang="ru">Подробно — в <a href="privacy.html#ru">политике конфиденциальности</a>.</span><span lang="en">Details: <a href="privacy.html">Privacy Policy</a>.</span></p>
+  <div class="data">
+    <p><span lang="ru">Виджет обращается <b>только</b> к Google, Microsoft и добавленным вами службам и ссылкам — прямо с вашего компьютера, по HTTPS.</span><span lang="en">The widget talks <b>only</b> to Google, Microsoft and the services and links you add — directly from your computer, over HTTPS.</span></p>
+    <p><span lang="ru"><b>Серверов разработчика нет</b>, как нет и учётных записей, статистики, рекламы.</span><span lang="en">There are <b>no servers</b> of the developer, no accounts, no analytics, no advertising.</span></p>
+    <p><span lang="ru">Разрешения на вход и копия событий хранятся <b>только на вашем компьютере</b>, зашифрованные средствами Windows (DPAPI).</span><span lang="en">Sign-in tokens and the offline copy of your events are stored <b>only on your computer</b>, encrypted by Windows (DPAPI).</span></p>
+    <p><span lang="ru">Вход — на странице самого Google или Microsoft; пароль виджет не видит. Данные Google используются только чтобы показывать и менять ваши события и задачи.</span><span lang="en">You sign in on Google’s or Microsoft’s own page; the widget never sees your password. Google data is used only to show and edit your events and tasks.</span></p>
+  </div>
+</section>
+
+<section id="faq">
+  <h2><span lang="ru">Вопросы и ответы</span><span lang="en">Questions and answers</span></h2>
+  <p class="sub"><span lang="ru">Не нашли ответ — «⋯ → Обновления → Сообщить о проблеме».</span><span lang="en">Didn’t find an answer? “⋯ → Updates → Report a problem”.</span></p>
+  <div class="faq">
+    <details open><summary><span lang="ru">Windows пишет «Система Windows защитила ваш компьютер»</span><span lang="en">Windows says “Windows protected your PC”</span></summary><p><span lang="ru">Так Windows встречает новые программы. Нажмите «Подробнее» → «Выполнить в любом случае». Позже виджет появится в Microsoft Store — там предупреждения нет.</span><span lang="en">That is how Windows greets new apps. Click “More info” → “Run anyway”. Later the widget will be in the Microsoft Store, without this warning.</span></p></details>
+    <details open><summary><span lang="ru">Это бесплатно?</span><span lang="en">Is it free?</span></summary><p><span lang="ru">Да, для личного использования. Без рекламы, подписок и регистрации.</span><span lang="en">Yes, for personal use. No ads, subscriptions or sign-up.</span></p></details>
+    <details><summary><span lang="ru">Как обновлять?</span><span lang="en">How do updates work?</span></summary><p><span lang="ru">Виджет раз в день проверяет новую версию и ставит её по кнопке «Обновить» — настройки и вход остаются.</span><span lang="en">Once a day the widget checks for a new version and installs it when you click “Update” — settings and sign-ins stay.</span></p></details>
+    <details><summary><span lang="ru">Работает на Windows 10 или на ARM?</span><span lang="en">Windows 10 or ARM?</span></summary><p><span lang="ru">Нужна Windows 11 (стекло — её). Для ноутбуков на Snapdragon есть своя сборка ARM — кнопка «Скачать» сама предложит нужную.</span><span lang="en">Windows 11 is required (the glass is hers). Snapdragon laptops have their own ARM build — the Download button picks the right one.</span></p></details>
+    <details><summary><span lang="ru">Как удалить?</span><span lang="en">How do I uninstall it?</span></summary><p><span lang="ru">«Параметры → Приложения» → «Календарь». Удаление спросит, стереть ли и ваши данные.</span><span lang="en">“Settings → Apps” → “Calendar”. The uninstaller asks whether to erase your data too.</span></p></details>
+    <details><summary><span lang="ru">Рабочий Outlook не подключается</span><span lang="en">My work Outlook won’t connect</span></summary><p><span lang="ru">Некоторые организации запрещают сторонние программы. Подойдёт «Outlook на этом компьютере» или календарь по ссылке.</span><span lang="en">Some organizations block third-party apps. Use “Outlook on this computer” or a calendar link instead.</span></p></details>
+    <details><summary><span lang="ru">Можно попробовать без аккаунта?</span><span lang="en">Can I try it without an account?</span></summary><p><span lang="ru">Да: на первом экране — «Посмотреть на примере».</span><span lang="en">Yes: “Try with sample data” on the first screen.</span></p></details>
+    <details><summary><span lang="ru">Не нравится — как вернуть прошлую версию?</span><span lang="en">How do I go back to a previous version?</span></summary><p><span lang="ru">«⋯ → Обновления → Прошлые версии»: скачайте нужный установщик и запустите — данные останутся.</span><span lang="en">“⋯ → Updates → Previous versions”: download the installer you want and run it — your data stays.</span></p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <h2><span lang="ru">Попробуйте — это минута</span><span lang="en">Try it — it takes a minute</span></h2>
+  <p class="sub"><span lang="ru">Без аккаунта можно сразу «Посмотреть на примере».</span><span lang="en">No account needed to look around.</span></p>
+  <a class="dl" id="dl2" href="https://github.com/narekn173/calendar-widget-releases/releases/latest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11m0 0 5-5m-5 5-5-5M5 20h14"/></svg><span><span lang="ru">Скачать для Windows 11</span><span lang="en">Download for Windows 11</span></span></a>
+</section>
 </main>
+
+<footer><span>© 2026 <a href="https://github.com/narekn173">narekn173</a></span><a href="privacy.html"><span lang="ru">Политика конфиденциальности</span><span lang="en">Privacy Policy</span></a><a href="terms.html"><span lang="ru">Условия использования</span><span lang="en">Terms of Service</span></a><span><span lang="ru">Лицензия</span><span lang="en">License</span> <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/">PolyForm Noncommercial 1.0.0</a> · <span lang="ru">независимый проект, не связан с Google и Microsoft</span><span lang="en">an independent project, not affiliated with Google or Microsoft</span></span></footer>
+</div>
+<script>
+// язык: сохранённый, иначе язык браузера (русский — ru, остальные — en)
+(function () {
+  var root = document.documentElement, saved = null;
+  try { saved = localStorage.getItem('cw-lang'); } catch (e) {}
+  function set(l) { root.dataset.l = l; root.lang = l; try { localStorage.setItem('cw-lang', l); } catch (e) {} }
+  set(saved || (/^ru\b/i.test(navigator.language || '') ? 'ru' : 'en'));
+  document.getElementById('lang').onclick = function () { set(root.dataset.l === 'ru' ? 'en' : 'ru'); render(); };
+
+  // «Скачать»: последний выпуск, установщик под процессор (ARM — где браузер это сообщает); без связи — страница выпусков
+  var rel = null, arm = false;
+  function render() {
+    if (!rel) return;
+    var ru = root.dataset.l === 'ru', ver = rel.tag_name.replace(/^v/, '');
+    var x64 = rel.assets.filter(function (a) { return /^CalendarWidget-Setup-[\d.]+\.exe$/.test(a.name); })[0];
+    var a64 = rel.assets.filter(function (a) { return /^CalendarWidget-Setup-[\d.]+-arm64\.exe$/.test(a.name); })[0];
+    var main = arm && a64 ? a64 : x64, other = main === a64 ? x64 : a64;
+    if (!main) return;
+    document.getElementById('dl').href = document.getElementById('dl2').href = main.browser_download_url;
+    document.getElementById('dl-meta').textContent = (ru ? 'версия ' : 'version ') + ver + ' · ' + Math.round(main.size / 1048576) + (ru ? ' МБ · ' : ' MB · ') + (main === a64 ? 'ARM' : 'x64');
+    var line = document.getElementById('other-line');
+    if (!other) { line.hidden = true; return; }
+    line.innerHTML = (other === a64
+      ? '<span lang="ru">Ноутбук на Snapdragon? </span><span lang="en">Snapdragon laptop? </span><a href=""><span lang="ru">Версия для ARM</span><span lang="en">ARM version</span></a> · '
+      : '<span lang="ru">Обычный ПК? </span><span lang="en">Regular PC? </span><a href=""><span lang="ru">Версия для x64</span><span lang="en">x64 version</span></a> · ');
+    line.querySelector('a').href = other.browser_download_url;
+  }
+  var uad = navigator.userAgentData, he = 'getHigh' + 'EntropyValues'; // имя по частям: в списке личного есть его подстрока
+  var hint = uad && uad[he]
+    ? uad[he](['architecture']).then(function (v) { arm = v.architecture === 'arm'; }, function () {})
+    : Promise.resolve();
+  fetch('https://api.github.com/repos/narekn173/calendar-widget-releases/releases/latest')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (j) { rel = j && j.assets ? j : null; return hint; })
+    .then(render, function () {});
+
+  // видео — когда оно есть на сайте
+  var v = document.getElementById('vid');
+  v.addEventListener('loadeddata', function () { document.getElementById('video').hidden = false; document.getElementById('nav-video').hidden = false; });
+})();
+</script>
 </body>
 </html>
